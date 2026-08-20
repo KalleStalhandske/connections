@@ -17,7 +17,7 @@ export function SolvedRow({ group, justSolved }: SolvedRowProps) {
   return (
     <div
       className={[
-        'flex aspect-square w-full flex-col items-center justify-center gap-1 rounded-md p-2 text-center sm:aspect-[4/1]',
+        'flex aspect-square w-full flex-col items-center justify-center gap-1 rounded-md p-2 text-center sm:aspect-20/3',
         DIFFICULTY_BG[group.difficulty],
         justSolved ? 'animate-solve-pop' : '',
       ].join(' ')}

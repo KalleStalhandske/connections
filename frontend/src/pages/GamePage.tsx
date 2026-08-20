@@ -160,7 +160,7 @@ export function GamePage() {
   const displayUnsolvedWords = status === 'lost' ? [] : unsolvedOrder;
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-6 sm:px-8">
+    <div className="mx-auto max-w-2xl px-4 py-6 sm:px-8">
       <div className="mb-4 text-center">
         <h1 className="text-lg font-semibold">{game.title}</h1>
         <p className="text-sm text-black/60">Create four groups of four!</p>

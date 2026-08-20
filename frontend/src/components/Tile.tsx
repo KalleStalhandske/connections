@@ -17,7 +17,7 @@ export function Tile({ word, selected, shaking, onClick, disabled }: TileProps) 
       onClick={onClick}
       disabled={disabled}
       className={[
-        'flex aspect-square w-full items-center justify-center rounded-md p-2 text-center font-bold uppercase',
+        'flex aspect-5/3 w-full items-center justify-center rounded-md p-2 text-center font-bold uppercase',
         'select-none transition-transform duration-100 ease-out active:scale-95',
         sizeClass,
         selected ? 'bg-tile-selected text-white' : 'bg-tile text-tile-text hover:brightness-95',
