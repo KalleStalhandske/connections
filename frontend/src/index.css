@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens for the Connections clone, tuned against the real NYT game.
+ * Keeping them here (rather than scattered literals in components) means
+ * Tailwind classes like `bg-conn-yellow` or `font-display` stay in sync.
+ */
+@theme {
+  --color-conn-yellow: #f9df6d;
+  --color-conn-green: #a0c35a;
+  --color-conn-blue: #b0c4ef;
+  --color-conn-purple: #ba81c5;
+
+  --color-tile: #efefe6;
+  --color-tile-text: #121212;
+  --color-tile-selected: #5a594e;
+
+  --color-ink: #121212;
+
+  /* Libre Franklin stands in for the NYT's proprietary sans-serif. */
+  --font-sans: 'Libre Franklin', ui-sans-serif, system-ui, sans-serif;
+  /* Georgia stands in for the NYT's proprietary serif used in the wordmark. */
+  --font-serif: Georgia, 'Times New Roman', serif;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink);
+  background: #fff;
+  font-family: var(--font-sans);
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes solve-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-solve-pop {
+  animation: solve-pop 0.4s ease-in-out;
+}
