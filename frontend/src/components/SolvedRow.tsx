@@ -1,11 +1,5 @@
+import { DIFFICULTY_BG } from '../lib/difficultyColors';
 import type { ConnectionGroup } from '../types';
-
-const DIFFICULTY_BG: Record<ConnectionGroup['difficulty'], string> = {
-  yellow: 'bg-conn-yellow',
-  green: 'bg-conn-green',
-  blue: 'bg-conn-blue',
-  purple: 'bg-conn-purple',
-};
 
 interface SolvedRowProps {
   group: ConnectionGroup;

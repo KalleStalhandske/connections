@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useGames } from '../store/GamesProvider';
 import { Grid } from '../components/Grid';
 import { MistakeDots } from '../components/MistakeDots';
+import { FLIP_DURATION_MS } from '../hooks/useFlip';
 import {
   MAX_MISTAKES,
   allWords,
@@ -29,6 +30,9 @@ export function GamePage() {
   const [justSolvedName, setJustSolvedName] = useState<string | null>(null);
   const [lastGuess, setLastGuess] = useState<string[] | null>(null);
   const [inputLocked, setInputLocked] = useState(false);
+  // Set the instant a guess is confirmed correct, cleared once that group's
+  // tiles finish sliding into place and become its solved-row band.
+  const [previewGroup, setPreviewGroup] = useState<ConnectionGroup | null>(null);
 
   const timeoutsRef = useRef<number[]>([]);
   useEffect(() => {
@@ -52,6 +56,7 @@ export function GamePage() {
       setJustSolvedName(null);
       setLastGuess(null);
       setInputLocked(false);
+      setPreviewGroup(null);
     }
   }, [game?.id]);
 
@@ -111,14 +116,23 @@ export function GamePage() {
     if (result.kind === 'correct') {
       const group = result.group;
       setInputLocked(true);
-      setJustSolvedName(group.name);
+      setSelected([]);
+      // Recolor the guessed tiles and slide them to the front of the
+      // unsolved order (where their solved-row band will land) before
+      // swapping them for that band, instead of just popping it in.
+      setPreviewGroup(group);
+      setUnsolvedOrder((prev) => [
+        ...prev.filter((w) => group.words.includes(w)),
+        ...prev.filter((w) => !group.words.includes(w)),
+      ]);
       schedule(() => {
         setSolvedGroups((prev) => [...prev, group]);
         setUnsolvedOrder((prev) => prev.filter((w) => !group.words.includes(w)));
-        setSelected([]);
+        setPreviewGroup(null);
+        setJustSolvedName(group.name);
         setInputLocked(false);
         schedule(() => setJustSolvedName(null), 400);
-      }, 300);
+      }, FLIP_DURATION_MS);
     } else if (result.kind === 'one-away') {
       setMessage('One away…');
       setMistakes((m) => m + 1);
@@ -150,6 +164,7 @@ export function GamePage() {
     setJustSolvedName(null);
     setLastGuess(null);
     setInputLocked(false);
+    setPreviewGroup(null);
   }
 
   const remainingGroups = game.groups.filter(
@@ -172,6 +187,7 @@ export function GamePage() {
         selectedWords={selected}
         shaking={shaking}
         justSolvedName={justSolvedName}
+        previewGroup={previewGroup}
         onToggleWord={toggleWord}
         disabled={status !== 'playing' || inputLocked}
       />
