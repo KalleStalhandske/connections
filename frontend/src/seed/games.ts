@@ -6,6 +6,33 @@ import type { ConnectionsGame } from '../types';
  */
 export const seedGames: ConnectionsGame[] = [
   {
+    id: 'seed-0',
+    title: 'TEST',
+    createdAt: '2026-01-01T00:00:00.000Z',
+    groups: [
+      {
+        name: '1:s',
+        words: ['1A', '1B', '1C', '1D'],
+        difficulty: 'yellow',
+      },
+      {
+        name: '2:s',
+        words: ['2A', '2B', '2C', '2D'],
+        difficulty: 'green',
+      },
+      {
+        name: '3:s',
+        words: ['3A', '3B', '3C', '3D'],
+        difficulty: 'blue',
+      },
+      {
+        name: '4:s',
+        words: ['4A', '4B', '4C', '4D'],
+        difficulty: 'purple',
+      },
+    ],
+  },
+  {
     id: 'seed-1',
     title: 'Classic Mix',
     createdAt: '2026-01-01T00:00:00.000Z',
