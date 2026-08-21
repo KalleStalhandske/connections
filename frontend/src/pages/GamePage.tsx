@@ -230,7 +230,7 @@ export function GamePage() {
       {status !== 'playing' && (
         <div className="mt-2 flex flex-col items-center gap-3 text-center">
           <p className="text-xl font-bold">
-            {status === 'won' ? 'You solved it! 🎉' : 'Better luck next time!'}
+            {status === 'won' ? 'You solved it!' : 'Better luck next time!'}
           </p>
           <p className="text-sm text-black/60">
             Mistakes: {mistakes} / {MAX_MISTAKES}

@@ -6,14 +6,8 @@ export function PlayBrowsePage() {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8 sm:px-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-center">
         <h1 className="text-2xl font-bold">Choose a game</h1>
-        <Link
-          to="/create"
-          className="rounded-full border border-black px-4 py-1.5 text-sm font-semibold hover:bg-black hover:text-white"
-        >
-          + Create a game
-        </Link>
       </div>
 
       {loading && <p className="text-sm text-black/60">Loading games…</p>}
