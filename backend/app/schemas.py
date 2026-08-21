@@ -7,10 +7,10 @@ JSON matches the frontend's `ConnectionsGame` type exactly - notably
 can still be constructed using the snake_case field names.
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, field_serializer, field_validator, model_validator
 from pydantic.alias_generators import to_camel
 
 Difficulty = Literal["yellow", "green", "blue", "purple"]
@@ -40,6 +40,16 @@ class GameOut(CamelModel):
 
     # Read straight from the SQLAlchemy model's attributes.
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True, from_attributes=True)
+
+    @field_serializer("created_at")
+    def serialize_created_at(self, value: datetime) -> str:
+        # SQLite drops tzinfo on round-trip, so `value` may come back naive.
+        # Every timestamp we store is UTC, so treat a naive value as UTC and
+        # always render the explicit "Z" offset the frontend's ISO string
+        # (and `new Date(...)` parsing) expects.
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=timezone.utc)
+        return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 # ---- Input schemas (what POST /api/games accepts) --------------------------
