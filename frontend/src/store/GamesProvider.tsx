@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ConnectionsGame } from '../types';
-import * as gamesRepository from '../lib/gamesRepository';
+import * as gamesRepository from '../api/games';
 
 interface GamesContextValue {
   games: ConnectionsGame[];
